@@ -1,0 +1,17 @@
+{
+  "id": "STS2-sgsdamageVoice",
+  "pck_name": "STS2-sgsdamageVoice",
+  "name": "三国杀无双音效",
+  "author": "Wswjq",
+  "version": "0.2.3",
+  "has_pck": false,
+  "has_dll": true,
+  "affects_gameplay": false,
+  "min_game_version": "0.105.0",
+  "dependencies": [
+    {
+      "id": "STS2-RitsuLib",
+      "min_version": "0.6.0"
+    }
+  ]
+}

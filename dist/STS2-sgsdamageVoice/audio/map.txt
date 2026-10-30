@@ -1,0 +1,5 @@
+﻿# 音效键 = 文件名（相对 audio 目录）。等号右边可以换成别的文件名。
+player_low = playerattack2enemy_1.mp3
+player_high = playerattack2enemy_2.mp3
+enemy_low = enemyattack2player_1.mp3
+enemy_high = enemyattack2player_2.mp3

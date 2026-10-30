@@ -1,0 +1,23 @@
+# ---- 本机工具链 / 第三方参考源码：不进仓库（体积大、可重新下载）----
+.tools/
+_refs/
+workshop/tools/uploader/
+workshop/tools/ModUploader-win-x64.zip
+
+# ---- 上传工具的本地状态与日志 ----
+mod-uploader.log
+workshop/SteamWorkspace/mod_id.txt
+
+# ---- 本机一次性修复残留 ----
+.acl-recovery/
+
+# ---- 常见构建/编辑器垃圾 ----
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+NewModWorkspace/
+Thumbs.db
+desktop.ini
