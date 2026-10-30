@@ -112,6 +112,8 @@ enemy_high  = enemyattack2player_2.mp3
 
 编译不依赖 .NET SDK：使用 `.tools\` 内的便携 `csc.exe`（Roslyn 5.9.0）+ `Microsoft.NETCore.App.Ref` 9.0.22 引用程序集，目标框架 `net9.0`。
 
+`build.ps1` 顶部把游戏目录与 RitsuLib 目录写成了本机绝对路径（`$GameDir` / `$RitsuDir`），换机器时按自己 Steam 库的位置改这两处即可。
+
 ## 七、目录结构
 
 ```
@@ -198,3 +200,47 @@ tools\uploader\ModUploader.exe upload -w SteamWorkspace
 - 首次上传后工作区会生成 `mod_id.txt`（记录工坊物品 ID）；以后更新沿用同一条命令，`changeNote` 写更新说明。
 - 标签（`tags`）上传后无法再改，首次上传前确认好；可见性建议先 `private` 自测，在 Steam 页面上改成 `public`。
 - 更新流程：`.\build\build.cmd` 重新编译 → 把 `dist\STS2-sgsdamageVoice\*` 覆盖到 `workshop\SteamWorkspace\content\` → 再跑一次上传命令。
+
+## 十一、托管到 GitHub（源码仓库）
+
+本目录已经是一个 git 仓库（`main` 分支，首次提交完成）。把它推到你的 GitHub 账号只需要两步。
+
+### 1. 在 GitHub 建空仓库
+
+打开 https://github.com/new ，仓库名建议 `sts2-sgsdamagevoice`，可见性随意（Public 任何人都能看源码，Private 只有你自己），**不要**勾选 Add README / Add .gitignore / Choose a license —— 本地已经有这些文件，勾了会在 push 时冲突。
+
+### 2. 关联并推送
+
+把 `<你的用户名>` 换成你的 GitHub 用户名，然后在本目录执行：
+
+```powershell
+cd D:\sls2_wswjqsvoice
+git remote add origin https://github.com/<你的用户名>/sts2-sgsdamagevoice.git
+git push -u origin main
+```
+
+首次 push 会弹出浏览器要求登录 GitHub（本机已装 Git Credential Manager），登录成功后凭据会被记住，以后不用再登。如果之前加过别的 remote，用 `git remote set-url origin <地址>` 覆盖。
+
+之后每次改完代码：
+
+```powershell
+git add -A
+git commit -m "说明这次改了什么"
+git push
+```
+
+### 关于仓库内容
+
+`.gitignore` 已排除这几样（体积大、可重新获取，不属于源码）：
+
+| 路径 | 原因 |
+| --- | --- |
+| `.tools\` | 便携编译器 + net9 引用程序集，约 134 MB |
+| `_refs\` | RitsuLib 参考源码，需要时重新 clone |
+| `workshop\tools\uploader\`、`ModUploader-win-x64.zip` | 官方上传工具，约 21 MB |
+| `mod-uploader.log`、`workshop\SteamWorkspace\mod_id.txt` | 本机上传状态 |
+| `.acl-recovery\` | 本机一次性修复残留 |
+
+仓库实际内容约 1.7 MB：源码、构建脚本、4 个音效、成品 dll、分发包 zip、创意工坊工作区。
+
+想把可执行文件也做成「下载即用」，在 GitHub 上建一个 Release（`Releases` → `Draft a new release`，tag 用 `v0.2.3`），把 `dist\STS2-sgsdamageVoice-0.2.3.zip` 拖进附件即可。
